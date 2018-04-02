@@ -32,7 +32,7 @@ def datacel(filrpath):
 @logger('生成数据驱动所用数据')
 def makedata():
     import os
-    path = os.getcwd() + '\\test_case\\case.xlsx'
+    path = os.getcwd() + '\\test_case_data\\case.xlsx'
     listid, listkey, listconeent, listurl, listfangshi, listqiwang, listname=datacel(path)
     make_data=[]
     for i in range(len(listid)):

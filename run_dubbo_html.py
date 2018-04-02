@@ -5,7 +5,8 @@ from testCase.dubbocase import testdubbointerface
 from Public.py_Html import createHtml
 from Public.get_excel import datacel
 from Public.create_report import save_result
-def stast():
+from Public.Dingtalk import send_ding
+def start_dubbo_case():
     starttime=datetime.datetime.now()
     day= time.strftime("%Y%m%d%H%M", time.localtime(time.time()))
     basdir=os.path.abspath(os.path.dirname(__file__))
@@ -16,9 +17,11 @@ def stast():
         os.system(r'touch %s' % filepath)
     save_result(starttime,len(listrelust),((list_pass)),list_fail)
     endtime=datetime.datetime.now()
-    createHtml(titles='dubbo接口测试报告',filepath=filepath,starttime=starttime,
+    createHtml(titles='dubbo接口自动化测试报告',filepath=filepath,starttime=starttime,
                endtime=endtime,passge=list_pass,fail=list_fail,
                id=listid,name=listname,key=listkey,coneent=listconeent,url=listurl,meth=listfangshi,
                yuqi=listqiwang,json=list_json,relusts=listrelust,weizhi=list_weizhi,exceptions=list_exption)
+    contec='dubbo接口自动化测试完成，测试通过:%s,测试失败：%s，异常:%s,未知错误：%s,详情见：%s'%(list_pass,list_fail,list_exption,list_weizhi,filepath)
+    send_ding(content=contec)
 if __name__ == '__main__':
-    stast()
+    start_dubbo_case()
