@@ -4,7 +4,6 @@ import os,datetime,time
 from testCase.dubbocase import testdubbointerface
 from Public.py_Html import createHtml
 from Public.get_excel import datacel
-from Public.create_report import save_result
 from Public.Dingtalk import send_ding
 def start_dubbo_case():
     starttime=datetime.datetime.now()
@@ -15,7 +14,6 @@ def start_dubbo_case():
     filepath =os.path.join(basdir+'\\test_Report\\%s-result.html'%day)
     if os.path.exists(filepath) is False:
         os.system(r'touch %s' % filepath)
-    save_result(starttime,len(listrelust),((list_pass)),list_fail)
     endtime=datetime.datetime.now()
     createHtml(titles='dubbo接口自动化测试报告',filepath=filepath,starttime=starttime,
                endtime=endtime,passge=list_pass,fail=list_fail,

@@ -9,9 +9,7 @@ import os,datetime
 from  Public.Dingtalk import send_ding
 from testCase.case import testinterface
 from  Public.get_excel import datacel
-from Public.create_report import save_result
 def start_excel_report_http():
-    starttime=datetime.datetime.now()
     m=datetime.datetime.now().strftime("%Y%m%d")
     basdir = os.path.abspath(os.path.dirname(__file__))
     path = os.getcwd() + '\\test_case_data\\case.xlsx'
@@ -20,7 +18,6 @@ def start_excel_report_http():
     filepath = os.path.join(basdir + '\\test_Report\\%s-result.xls'%m)
     if os.path.exists(filepath) is False:
         os.system(r'touch %s' % filepath)
-    save_result(starttime, len(listrelust), ((list_pass)), list_fail)
     create(filename=filepath,list_fail=list_fail, list_pass=list_pass, list_json=list_json, listurls=listurl,
            listkeys=listkey,listconeents=listconeent, listfangshis=listfangshi, listqiwangs=listqiwang,
            listids=listid, listrelust=listrelust, listnames=listname)
