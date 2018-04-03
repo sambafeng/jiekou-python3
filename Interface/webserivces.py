@@ -1,33 +1,19 @@
-import urllib.request
-import xmltodict,json
-from urllib.parse import urlencode
-from urllib import request,parse
-# page = urllib.request.urlopen("http://ws.webxml.com.cn/webservices/ChinaTVprogramWebService.asmx/getAreaDataSet")
-# lines = page.readlines()
-# page.close()
-# document = ""
-# for line in lines :
-#     document = document + line.decode('utf-8')
-# hmo=xmltodict.parse(document)
-# h=hmo['DataSet']['diffgr:diffgram']['Area']['AreaList']
-# m=0
-# for m in range(len(h)):
-#     print(h[m]['Zone'])
-#     m+=1
 from suds.client import Client
-page='http://ws.webxml.com.cn/webservices/DomesticAirline.asmx?op=getDomesticAirlinesTime'
-headers={
-'Accept-Encoding': 'gzip, deflate',
-'Accept-Language': 'zh-CN,zh;q=0.9',
-'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
-}
-data1={'startCity':'北京','lastCity':'上海','theDate':'','userID':''}
+from suds.xsd.doctor import ImportDoctor,Import
+def web_interfa(url,interface):
+    imp= Import('http://www.w3.org/2001/XMLSchema',
+     location='http://www.w3.org/2001/XMLSchema.xsd')
+    imp.filter.add("http://WebXml.com.cn/")
+    d= ImportDoctor(imp)
+    page1 = Client("%s?wsdl"%url,autoblend = True,doctor=d)
+    resul=page1.service.getAreaDataSet()
+    print(resul)
 
-encode_arg = urllib.parse.urlencode(data1)
-
-req = request.Request(url=page,data=encode_arg)
-print(req)
-reponse=urllib.request.urlopen(req)
-m=reponse.readlines()
-print(m)
+# page='http://ws.webxml.com.cn/WebServices/TrainTimeWebService.asmx?wsdl'
+# imp= Import('http://www.w3.org/2001/XMLSchema',
+#  location='http://www.w3.org/2001/XMLSchema.xsd')
+# imp.filter.add("http://WebXml.com.cn/")
+# d= ImportDoctor(imp)
+# client=Client(page,autoblend = True,doctor=d)
+# result=client.service.getStationAndTimeByStationName(StartStation='北京',ArriveStation='上海',UserID='')
+# print((result['diffgram']['getStationAndTime']['TimeTable']))
